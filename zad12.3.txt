@@ -1,0 +1,61 @@
+using System;
+namespace zadaneczko10
+{
+    abstract class Pracownik
+    {
+        public string imie;
+        public abstract double ObliczWynagrodzenie();
+
+    }
+    class PracownikEtatowy : Pracownik
+    {
+        double pensjaMiesieczna;
+        public override double ObliczWynagrodzenie()
+        {
+            return pensjaMiesieczna;
+        }
+        public PracownikEtatowy(string imie, double pensjaMiesieczna)
+        {
+            this.imie = imie;
+            this.pensjaMiesieczna = pensjaMiesieczna;
+        }
+    }
+    class Zleceniobiorca : Pracownik
+    {
+        double stawkaGodzinowa;
+        double liczbaGodzin;
+        public override double ObliczWynagrodzenie()
+        {
+            return stawkaGodzinowa*liczbaGodzin;
+        }
+        public Zleceniobiorca(string imie, double stawkaGodzinowa, double liczbaGodzin)
+        {
+            this.imie = imie;
+            this.stawkaGodzinowa = stawkaGodzinowa;
+            this.liczbaGodzin = liczbaGodzin;
+        }
+    }
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            double wyplaty = 0;
+            List<Pracownik> Pracownicy = new List<Pracownik> 
+            {
+                new PracownikEtatowy("Cygan9", 5000.0),
+                new PracownikEtatowy("Haranczykov", 6500.0),
+                new Zleceniobiorca("Mlody dymas", 40.0, 160.0)
+            };
+            foreach (var pracownik in Pracownicy)
+            {
+                Console.WriteLine($"Imie: {pracownik.imie}");
+                Console.WriteLine($"Wynagrodzenie: {pracownik.ObliczWynagrodzenie()} PLN");
+                Console.WriteLine("");
+                wyplaty += pracownik.ObliczWynagrodzenie();
+            }
+            Console.WriteLine($"Laczne wynagrodzenie pracownikow: {wyplaty}");
+        }
+
+    }
+}
